@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe - Multiplayer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Tic Tac Toe - Multiplayer</h1>
+    </header>
+    <main>
+        <div class="board">
+            <div class="row">
+                <div class="cell" id="cell-0" onclick="makeMove(0)"></div>
+                <div class="cell" id="cell-1" onclick="makeMove(1)"></div>
+                <div class="cell" id="cell-2" onclick="makeMove(2)"></div>
+            </div>
+            <div class="row">
+                <div class="cell" id="cell-3" onclick="makeMove(3)"></div>
+                <div class="cell" id="cell-4" onclick="makeMove(4)"></div>
+                <div class="cell" id="cell-5" onclick="makeMove(5)"></div>
+            </div>
+            <div class="row">
+                <div class="cell" id="cell-6" onclick="makeMove(6)"></div>
+                <div class="cell" id="cell-7" onclick="makeMove(7)"></div>
+                <div class="cell" id="cell-8" onclick="makeMove(8)"></div>
+            </div>
+        </div>
+        <p id="status">Player X's turn</p>
+    </main>
+    <footer>
+        <p>&copy; 2024 Fun Games Website</p>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // Tic Tac Toe game logic
+        const cells = document.querySelectorAll(".cell");
+        let currentPlayer = "X";
+        let winner = null;
+        let gameBoard = ["", "", "", "", "", "", "", "", ""];
+
+        function makeMove(cellIndex) {
+            if (!winner && !gameBoard[cellIndex]) {
+                gameBoard[cellIndex] = currentPlayer;
+                cells[cellIndex].textContent = currentPlayer;
+                checkWinner();
+                currentPlayer = currentPlayer === "X" ? "O" : "X";
+                document.getElementById("status").textContent = `Player ${currentPlayer}'s turn`;
+            }
+        }
+
+        function checkWinner() {
+            const winningConditions = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6] // Diagonals
+            ];
+
+            for (let condition of winningConditions) {
+                const [a, b, c] = condition;
+                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+                    winner = gameBoard[a];
+                    document.getElementById("status").textContent = `Player ${winner} wins!`;
+                    return;
+                }
+            }
+
+            if (!gameBoard.includes("")) {
+                winner = "draw";
+                document.getElementById("status").textContent = "It's a draw!";
+            }
+        }
+    </script>
+</body>
+</html>
