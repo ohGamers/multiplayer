@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Player Games</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Single Player Games</h1>
+    </header>
+    <main>
+        <h2>Guess the Number</h2>
+        <p>I'm thinking of a number between 1 and 100. See if you can guess it!</p>
+        <input type="number" id="guessInput">
+        <button onclick="checkGuess()">Check</button>
+        <p id="result"></p>
+    </main>
+    <footer>
+        <p>&copy; 2024 Fun Games Website</p>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // Guess the Number game logic
+        const secretNumber = getRandomNumber(1, 100);
+        let attempts = 0;
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById("guessInput").value);
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                document.getElementById("result").textContent = "Please enter a valid number between 1 and 100.";
+            } else {
+                attempts++;
+                if (guess === secretNumber) {
+                    document.getElementById("result").textContent = `Congratulations! You guessed the number ${secretNumber} in ${attempts} attempts.`;
+                } else if (guess < secretNumber) {
+                    document.getElementById("result").textContent = "Too low. Try again.";
+                } else {
+                    document.getElementById("result").textContent = "Too high. Try again.";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
